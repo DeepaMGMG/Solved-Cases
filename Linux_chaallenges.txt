@@ -1,0 +1,24 @@
+Problem:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:q1tV4cGUkx5cMV2WDtc3eF9rHDCgImrsETCwiDZET2E.
+Please contact your system administrator.
+Add correct host key in /home/ubuntu/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /home/ubuntu/.ssh/known_hosts:3
+  remove with:
+  ssh-keygen -f '/home/ubuntu/.ssh/known_hosts' -R 'datanode2'
+Host key for datanode2 has changed and you have requested strict checking.
+Host key verification failed.
+
+Solution:
+ssh-keygen -f '/home/ubuntu/.ssh/known_hosts' -R 'datanode1'
+ssh-keygen -f '/home/ubuntu/.ssh/known_hosts' -R 'datanode2'
+
+known_hosts file stores the ip address and the name of the remote server in the form of key values pair. When you change the host name of the server you connected from the current machine and the same name was also has been assigned to the other ip address in the known_hosts file, this confict arises.
+So delete both the hostname from the known_hosts file using the above command. Hence conflict will be resolved and when you connect again to both those remote servers, the updated key value pair will be stored in the know_hosts file.
+
